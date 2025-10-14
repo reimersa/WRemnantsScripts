@@ -3,24 +3,10 @@ import re
 
 
 from wums import plot_tools
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
 from utilities.io_tools import input_tools
 import numpy as np
-import matplotlib.colors as mcolors
-
-
-def corr_name(corrf):
-    if not corrf.endswith(".pkl.lz4"):
-        raise ValueError(f"File {corrf} is not a lz4 compressed pickle file")
-
-    match = re.match(r"(.*)Corr[Z|W]\.pkl\.lz4", os.path.basename(corrf))
-    return match[1]
-
-
-
-# Define the exponential model: A * exp(-ax)
-def exp_func(x, A, a):
-    return A * np.exp(a*x)
+import matplotlib.colors as mcolors # type: ignore
 
 
 def main():
@@ -38,9 +24,10 @@ def main():
     # filename_resum = "SCETlib/ct18z_newnps_n3+0ll_reproducesold/inclusive_Z_CT18Z_N3+0LL_olduncertainties_Lambda24_higherprecision_combined.pkl"
     # filename_resum = "SCETlib/ct18z_newnps_n3+0ll_reproducesold/inclusive_Z_CT18Z_N3+0LL_olduncertainties_cnu_omeganu_combined.pkl"
 
-    # filename_resum = "SCETlib/ct18z_nplambda_n3+0ll/inclusive_Z_CT18Z_nplambda_N3+0LL_combined.pkl"
+    filename_resum = "SCETlib/ct18z_nplambda_n3+0ll/inclusive_Z_CT18Z_nplambda_N3+0LL_combined.pkl"
     # filename_resum = "SCETlib/ct18z_newnps_n3+0ll_reproducesold/inclusive_Z_CT18Z_N3+0LL_olduncertainties_final_allvars_higherprecision_combined.pkl"
-    filename_resum = "SCETlib/ct18z_newnps_n3+0ll_lattice/inclusive_Z_CT18Z_N3+0LL_lattice_allvars_higherprecision_combined.pkl"
+    # filename_resum = "SCETlib/ct18z_newnps_n3+0ll_lattice/inclusive_Z_CT18Z_N3+0LL_lattice_allvars_higherprecision_combined.pkl"
+    # filename_resum = "SCETlib/ct18z_newnps_n3+0ll_lattice/inclusive_Z_CT18Z_N3+0LL_lattice_newvalsoldvars_higherprecision_combined.pkl"
 
     variations_and_legnames = [
         # # Lambda2
@@ -151,7 +138,7 @@ def main():
 
 
         # old NP variations (target for new NP model)
-        # ("pdf0", "nominal"),
+        ("pdf0", "nominal"),
         
         # # cnu + omeganu part
         # ("omega_nu0.5", "$(c_{\\nu}, \\omega_{\\nu}) = (nom. (0.1), 0.5)$"),
@@ -160,8 +147,8 @@ def main():
         # # lambda2/4 + dLambda2
         # ("Lambda20.25", "$\\Lambda_{2}^{old} = 0.25$"),
         # ("Lambda2-0.25", "$\\Lambda_{2}^{old} = -0.25$"),
-        # ("Lambda4.01", "$\\Lambda_{4}^{old} = 0.01$"),
-        # ("Lambda4.16", "$\\Lambda_{4}^{old} = 0.16$"),
+        ("Lambda4.01", "$\\Lambda_{4}^{old} = 0.01$"),
+        ("Lambda4.16", "$\\Lambda_{4}^{old} = 0.16$"),
         # ("Delta_Lambda20.02", "$\\Delta\\Lambda_{2}^{old} = 0.02$"),
         # ("Delta_Lambda2-0.02", "$\\Delta\\Lambda_{2}^{old} = -0.02$"),
 
@@ -184,7 +171,7 @@ def main():
 
 
         # new NP with lattice central values + variations
-        ("pdf0", "nominal (lattice)"),
+        # ("pdf0", "nominal (lattice)"),
         # ("lambda2_nu0.0696-lambda4_nu0.0122-lambda_inf_nu1.1Ext", "Eigenvar. 1 (up)"),
         # ("lambda2_nu0.1044-lambda4_nu0.0026-lambda_inf_nu2.1Ext", "Eigenvar. 1 (down)"),
         # ("lambda2_nu0.1153-lambda4_nu0.0032-lambda_inf_nu1.6Ext", "Eigenvar. 2 (up)"),
@@ -192,12 +179,28 @@ def main():
         # ("lambda2_nu0.0873-lambda4_nu0.0092", "Eigenvar. 3 (up)"),
         # ("lambda2_nu0.0867-lambda4_nu0.0056", "Eigenvar. 3 (down)"),
 
-        ("lambda20.0", "$\\Lambda_{2}^{new} = 0.00$"),
-        ("lambda20.5", "$\\Lambda_{2}^{new} = 0.50$"),
-        ("lambda40.01", "$\\Lambda_{4}^{new} = 0.01$"),
-        ("lambda40.16", "$\\Lambda_{4}^{new} = 0.16$"),
-        ("delta_lambda20.105", "$\\Delta\\Lambda_{2}^{new} = 0.105$"),
-        ("delta_lambda20.145", "$\\Delta\\Lambda_{2}^{new} = 0.145$"),
+        # ("lambda20.0", "$\\Lambda_{2}^{new} = 0.00$"),
+        # ("lambda20.5", "$\\Lambda_{2}^{new} = 0.50$"),
+        # ("lambda40.01", "$\\Lambda_{4}^{new} = 0.01$"),
+        # ("lambda40.16", "$\\Lambda_{4}^{new} = 0.16$"),
+        # ("delta_lambda20.105", "$\\Delta\\Lambda_{2}^{new} = 0.105$"),
+        # ("delta_lambda20.145", "$\\Delta\\Lambda_{2}^{new} = 0.145$"),
+
+
+        # new NP with lattice central values + old-like variations
+        # ("pdf0", "nominal (lattice)"),
+
+        # ("lambda2_nu-0.413-lambda_inf_nu1.4853", "$\\gamma$ variation up"),
+        # ("lambda2_nu0.587-lambda_inf_nu1.8853", "$\\gamma$ variation down"),
+        # ("lambda20.0", "$\\Lambda_{2}^{new} = 0.00$"),
+        # ("lambda20.5", "$\\Lambda_{2}^{new} = 0.50$"),
+        # ("delta_lambda20.105", "$\\Delta\\Lambda_{2}^{new} = 0.105$"),
+        # ("delta_lambda20.145", "$\\Delta\\Lambda_{2}^{new} = 0.145$"),
+        # ("lambda40.01", "$\\Lambda_{4}^{new} = 0.01$"),
+        # ("lambda40.16", "$\\Lambda_{4}^{new} = 0.16$"),
+        # ("lambda40.26", "$\\Lambda_{4}^{new} = 0.26$"),
+        # ("lambda40.56", "$\\Lambda_{4}^{new} = 0.56$"),
+        # ("lambda41.06", "$\\Lambda_{4}^{new} = 1.06$"),
 
 
 
@@ -208,7 +211,7 @@ def main():
     hists_resum = [input_tools.read_scetlib_hist(os.path.join(genpath, filename_resum))[{"vars" : var}] for (var, _) in variations_and_legnames]
     # hists_resum = [input_tools.read_scetlib_hist(os.path.join(genpath, filename_resum))[{"vars" : var, "qT": 0}] for (var, _) in variations_and_legnames]
     # hists_resum = [input_tools.read_scetlib_hist(os.path.join(genpath, filename_resum))[{"vars" : var, "Y": 3}] for (var, _) in variations_and_legnames]
-    outfoldername = "/work/submit/areimers/wmass/plots/TheoryCorrections/Z/corrections_standalone"
+    outfoldername = f"/work/submit/areimers/wmass/plots/TheoryCorrections/Z/corrections_standalone/{filename_resum.split("/")[-1].replace(".pkl", "")}"
     os.makedirs(outfoldername, exist_ok=True)
     # print(hists_resum[0][{"Y": 0}].project("qT"))
 
