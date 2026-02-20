@@ -39,27 +39,28 @@ def main():
 
     genpath = "/work/submit/areimers/wmass/TheoryCorrections"
     
-    filenames_resum = ["SCETlib/ct18z_nplambda_pdfvars_arnetest/inclusive_Z_CT18Z_nplambda_N4LL_pdfas_pdf_combined.pkl", "SCETlib/ct18z_nplambda_pdfvars_arnetest/inclusive_Z_CT18Z_nplambda_N3p1LL_pdfas_pdf_combined.pkl"]
-    # filenames_resum = ["SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_pdf_combined.pkl"]
+    # filenames_resum = ["SCETlib/ct18z_newnps_n3+0ll_lattice_pdfvars/inclusive_Z_CT18Z_N3+0LL_lattice_allvars_higherprecision_pdfas_pdf_combined.pkl"]
+    filenames_resum = ["SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_pdf_combined.pkl"]
     
+    # filenames_fosing = ["SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_nnlo_sing_pdf_combined.pkl", "SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_nnlo_sing_pdf_combined.pkl", "SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_nnlo_sing_pdf_combined.pkl"]
     filenames_fosing = ["SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_nnlo_sing_pdf_combined.pkl", "SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_nnlo_sing_pdf_combined.pkl", "SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_nnlo_sing_pdf_combined.pkl"]
 
-    filenames_fullcorr = ["/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixed_PdfAsFromN4LL_pdfasCorrZ.pkl.lz4", "/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixed_PdfAsFromN4LL_ResumSelf_pdfasCorrZ.pkl.lz4"]
-    # filenames_fullcorr = ["/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixed_pdfasCorrZ.pkl.lz4"]
-    # filenames_fullcorr = ["/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_dyturbo_N4p0LLN2LOUnsmoothed_N3pLLFixed_PdfAsFromN4LL_pdfasCorrZ.pkl.lz4"]
-
+    # filenames_fo = ["DYTURBO/nnlo-scetlibmatch/pdfvariations/CT18ZNNLO_as/z0/results_z-2d-nnlo-vj-CT18ZNNLO_as-member{i}-scetlibmatch.txt", "DYTURBO/nnlo-scetlibmatch/pdfvariations/CT18ZNNLO_as/z0/results_z-2d-nnlo-vj-CT18ZNNLO_as-member{i}-scetlibmatch.txt", "DYTURBO/nnlo-scetlibmatch/pdfvariations/CT18ZNNLO_as/z0/results_z-2d-nnlo-vj-CT18ZNNLO_as-member{i}-scetlibmatch.txt"]
     filenames_fo = ["DYTURBO/nnlo-scetlibmatch/pdfvariations/CT18ZNNLO_as/z0/results_z-2d-nnlo-vj-CT18ZNNLO_as-member{i}-scetlibmatch.txt", "DYTURBO/nnlo-scetlibmatch/pdfvariations/CT18ZNNLO_as/z0/results_z-2d-nnlo-vj-CT18ZNNLO_as-member{i}-scetlibmatch.txt", "DYTURBO/nnlo-scetlibmatch/pdfvariations/CT18ZNNLO_as/z0/results_z-2d-nnlo-vj-CT18ZNNLO_as-member{i}-scetlibmatch.txt"]
 
+    filenames_fullcorr = ["/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_dyturbo_NewNPModel_LatticeValsAndVars_pdfasCorrZ.pkl.lz4", "/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_dyturbo_NewNPModel_LatticeValsAndVars_PdfAsRerun_pdfasCorrZ.pkl.lz4"]
+    # filenames_fullcorr = ["/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_dyturbo_NewNPModel_LatticeValsAndVars_PdfAsRerun_pdfasCorrZ.pkl.lz4"]
 
-    vars_to_plot = [{"vars" :  "pdfCT18ZNNLO_as_0118"}, {"vars" :  "pdfCT18ZNNLO_as_0116"}, {"vars" :  "pdfCT18ZNNLO_as_0120"}]
-    # vars_to_plot = [{"vars" :  0}, {"vars" :  1}, {"vars" :  2}]
-    plot_tag_resum = "_asFromN4LL"
+
+    # vars_to_plot = [{"vars" :  "pdfCT18ZNNLO_as_0118"}, {"vars" :  "pdfCT18ZNNLO_as_0116"}, {"vars" :  "pdfCT18ZNNLO_as_0120"}]
+    vars_to_plot = [{"vars" :  0}, {"vars" :  1}, {"vars" :  2}]
+    plot_tag_resum = "_asFromLatticeNP"
     # plot_tag_resum = "_asFromN3LL"
-    plot_tag_fosing = "_asFromN2LO"
-    plot_tag_fullcorr = "_asFromN4LL"
+    plot_tag_fosing = "_asFromLatticeNP"
+    plot_tag_fullcorr = "_asFromLatticeNP"
     # plot_tag_fullcorr = "_asFromN3LL"
     # plot_tag_fullcorr = "N4LLN2LO_asFromN4LL"
-    plot_tag_fo = "_asFromN2LO"
+    plot_tag_fo = "_asFromLatticeNP"
 
     hists_resum = [input_tools.read_scetlib_hist(os.path.join(genpath, fnr)) for fnr in filenames_resum]
     hists_fosing = [input_tools.read_scetlib_hist(os.path.join(genpath, fns)) for fns in filenames_fosing]
@@ -71,10 +72,14 @@ def main():
     # hists_fullcorr = [pickle.load(lz4.frame.open(fnf))["Z"]["scetlib_dyturbo_N4p0LLN2LOUnsmoothed_N3pLLFixed_PdfAsFromN4LL_pdfas_hist"] for fnf in filenames_fullcorr]
     # hists_fullcorr = [pickle.load(lz4.frame.open(fnf))["Z"]["scetlib_dyturboCT18Z_pdfas_hist"] for fnf in filenames_fullcorr]
 
+    # print("HEREEEEE")
+    # print(pickle.load(lz4.frame.open("/work/submit/areimers/wmass/WRemnants/wremnants-data/data/TheoryCorrections/scetlib_dyturbo_NewNPModel_LatticeValsAndVars_pdfasCorrZ.pkl.lz4"))["Z"])
+    hists_fullcorr = [pickle.load(lz4.frame.open(fnf))["Z"]["scetlib_dyturboCT18Z_pdfas_hist"] if "scetlib_dyturbo_NewNPModel_LatticeValsAndVars_pdfasCorrZ.pkl.lz4" in fnf else pickle.load(lz4.frame.open(fnf))["Z"][hnf] for (fnf, hnf) in zip(filenames_fullcorr, histnames_fullcorr)]
+
     vars_resum  = [h[v] for (h, v) in product(hists_resum, vars_to_plot)]
     vars_fosing  = [h[v] for (h, v) in zip(hists_fosing, vars_to_plot)]
-    vars_fullcorr  = [h[v] for (h, v) in product(hists_fullcorr, vars_to_plot)]
     vars_fo  = [h[v] for (h, v) in zip(hists_fo, vars_to_plot)]
+    vars_fullcorr  = [h[v] for (h, v) in product(hists_fullcorr, vars_to_plot)]
 
     outfoldername = "/work/submit/areimers/wmass/plots/TheoryCorrections/Z/corrections_standalone"
     os.makedirs(outfoldername, exist_ok=True)
@@ -100,6 +105,11 @@ def main():
             logy=True,
         )
         fig.savefig(f"{outfoldername}/correction_ascomparison_resumm{plot_tag_resum}_{v}.pdf")
+
+        print(hists_fosing)
+        print(vars_to_plot)
+        print([var_fosing.project(v) for var_fosing in vars_fosing])
+        print([str(var_to_plot["vars"]) for ffs in filenames_fosing for var_to_plot in vars_to_plot])
 
         fig = plot_tools.makePlotWithRatioToRef(
             hists=[var_fosing.project(v) for var_fosing in vars_fosing],
@@ -152,7 +162,7 @@ def main():
             ratio_legend=False,
             linewidth=1,
             legtext_size=15,
-            logy=True,
+            logy=False,
         )
         fig.savefig(f"{outfoldername}/correction_ascomparison_FullCorr{plot_tag_fullcorr}_{v}.pdf")
 

@@ -17,6 +17,7 @@ from utilities.io_tools import input_tools
 import mplhep
 import numpy as np
 from scipy.optimize import curve_fit
+from hist import tag
 
 
 def corr_name(corrf):
@@ -43,7 +44,13 @@ def main():
         # "scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixedCorrZ.pkl.lz4",
         # "scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixed_ResumSelfCorrZ.pkl.lz4",
         # "scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixed_AsAtN4LL_ResumSelfCorrZ.pkl.lz4",
-        "scetlib_dyturbo_ResumSelfCorrZ.pkl.lz4", 
+        # "scetlib_dyturbo_ResumSelfCorrZ.pkl.lz4", 
+        # "scetlib_dyturbo_NewNPModel_LatticeValsAndVarsCorrZ.pkl.lz4",
+        # "scetlib_dyturbo_NewNPModel_LatticeValsAndVars_WithLatticeFOSingCorrZ.pkl.lz4",
+        # "scetlib_dyturbo_NewNPModel_LatticeValsAndVars_PdfAsRerun_pdfasCorrZ.pkl.lz4",
+        "scetlib_dyturboN3p0LL_LatticeNPCorrZ.pkl.lz4",
+        # "scetlib_dyturboN3p0LL_LatticeNP_pdfasCorrZ.pkl.lz4",
+        # "scetlib_dyturbo_LatticeNP_FineBins_CT18Z_N3p0LL_N2L0_CorrZ.pkl.lz4",
 
     ]
 
@@ -52,7 +59,7 @@ def main():
 
 
     corrnames_translation = {
-        "scetlib_dyturboCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (nominal)",
+        "scetlib_dyturboCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (old NP model)",
         "scetlib_dyturboN3p1LLCorrZ.pkl.lz4": "N$^{2{+}1}$LL+NNLO",
         "scetlib_nnlojet_N3p1LLN3LOUnsmoothed_N3pLLFixedCorrZ.pkl.lz4": "N$^{2{+}1}$LL+N$^{3}$LO",
         "scetlib_nnlojet_N3p1LLN3LOUnsmoothed_N3pLLFixed_N2p1LLFixedCorrZ.pkl.lz4": "N$^{3{+}1}$LL+N$^{3}$LO",
@@ -63,6 +70,27 @@ def main():
         "scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixed_ResumSelfCorrZ.pkl.lz4": "N$^{4{+}0}$LL+N$^{3}$LO (resum. from Arne)",
         "scetlib_nnlojet_N4p0LLN3LOUnsmoothed_N3pLLFixed_AsAtN4LL_ResumSelfCorrZ.pkl.lz4": "N$^{4{+}0}$LL+N$^{3}$LO (as@N$^{4}$4LL, resum. from Arne)",
         "scetlib_dyturbo_ResumSelfCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (remade N$^{3{+}0}$LL piece)",
+        "scetlib_dyturbo_NewNPModel_LatticeValsAndVarsCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (new NP, lattice vals/vars)",
+        "scetlib_dyturbo_NewNPModel_LatticeValsAndVars_WithLatticeFOSingCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (lattice vals/vars, +lattice FO singular)",
+        "scetlib_dyturbo_NewNPModel_LatticeValsAndVars_PdfAsRerun_pdfasCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (lattice vals/vars, rerun pdfas)",
+        "scetlib_dyturboN3p0LL_LatticeNPCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (new NP model)",
+        "scetlib_dyturboN3p0LL_LatticeNP_pdfasCorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (lattice, pdfas file)",
+        "scetlib_dyturbo_LatticeNP_FineBins_CT18Z_N3p0LL_N2L0_CorrZ.pkl.lz4": "N$^{3{+}0}$LL+NNLO (new NP, finer binning)",
+    }
+
+    vars_translation = {
+        "qT": "q$_{T}$ (GeV)",
+        "absY": "|Y|",
+    }
+
+    yaxis_per_var = {
+        "qT": "Prediction (pb / GeV)",
+        "absY": "Prediction (pb / bin)",
+    }
+
+    ratio_ranges_per_var = {
+        "qT": [0.90, 1.10],
+        "absY": [0.995, 1.005],
     }
 
     # os.makedirs(args.outfolder, exist_ok=True)
@@ -71,45 +99,30 @@ def main():
     proc = "Z"
     corrnames = [corr_name(c) for c in corrections]
     corrnames_pretty = [corrnames_translation[c] for c in corrections]
-    var = "qT"
+    vars = ["qT", "absY"]
 
-
-    for cname, cfile in zip(corrnames, corrfiles):
-        print(f"\n\n--> Now at correction {cname}")
-        # print(cfile[proc])
-        h = cfile[proc][cname+"_hist"][{"vars": 0}]
-        print(h)
-        relstatunc = math.sqrt(h.sum().variance) / h.sum().value
-        print(f"Relative stat unc of correction: {relstatunc}")
-        h_minnlo = cfile[proc]["minnlo_ref_hist"]
-        relstatunc_minnlo = math.sqrt(h_minnlo.sum().variance) / h_minnlo.sum().value
-        print(f"Relative stat unc of MiNNLO reference: {relstatunc_minnlo}")
-        sf = relstatunc / relstatunc_minnlo
-        print(f"Should increase the MiNNLO stat unc by a factor of {sf:.02f} to reflect the stat unc in the correction")
-
-    
-
-    colors = [f"{mcolors.to_hex(c)}" for c in list(plt.get_cmap("tab10").colors)]
-    fig = plot_tools.makePlotWithRatioToRef(
-        hists=[cfile[proc][cname+"_hist"][{"vars": 0}].project(var) for cname, cfile in zip(corrnames, corrfiles)],
-        labels=corrnames_pretty,
-        colors=colors[:len(corrfiles)],
-        xlabel="q$_{T}$ (GeV)", 
-        ylabel="Events / bin",
-        rlabel="var. / nom.",
-        rrange=[0.99, 1.01],
-        nlegcols=1,
-        xlim=None, 
-        binwnorm=1.0, 
-        baseline=True, 
-        yerr=True,
-        yerr_ratio=True,
-        ratio_legend=False,
-        linewidth=1,
-    )
-    plotoutname = f"{outfoldername}/{plotoutname_base}.pdf"
-    fig.savefig(plotoutname)
-    print(f"--> Wrote plot to {plotoutname}")
+    for var in vars:
+        colors = [f"{mcolors.to_hex(c)}" for c in list(plt.get_cmap("tab10").colors)]
+        fig = plot_tools.makePlotWithRatioToRef(
+            hists=[cfile[proc][cname+"_hist"][{"vars": 0}].project(var) for cname, cfile in zip(corrnames, corrfiles)],
+            labels=corrnames_pretty,
+            colors=colors[:len(corrfiles)],
+            xlabel=vars_translation[var], 
+            ylabel=yaxis_per_var[var],
+            rlabel="new / old",
+            rrange=ratio_ranges_per_var[var],
+            nlegcols=1,
+            xlim=None, 
+            binwnorm=1.0, 
+            baseline=True, 
+            yerr=True,
+            # yerr_ratio=True,
+            ratio_legend=False,
+            linewidth=1,
+        )
+        plotoutname = f"{outfoldername}/{plotoutname_base}_{var}.pdf"
+        fig.savefig(plotoutname)
+        print(f"--> Wrote plot to {plotoutname}")
 
         
 

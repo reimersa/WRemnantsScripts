@@ -34,9 +34,12 @@ def main():
     # infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ZMassWLike_eta_pt_charge_scetlib_dyturboCorr_FixedAlphaS_BinnedScale//ZMassWLike.hdf5"
     # infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ZMassDilepton_ptll_scetlib_dyturbo_NewNPModel_OldValsAndVarsCorr_FixedAlphaS_PerBinStatCorrUnc//ZMassDilepton.hdf5"
     # infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ZMassDilepton_ptll_scetlib_dyturbo_NewNPModel_LatticeValsAndVarsCorr_FixedAlphaS_PerBinStatCorrUnc//ZMassDilepton.hdf5"
-    infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ZMassDilepton_ptll_yll_scetlib_dyturboCorr_FixedAlphaS_AlphaS_PerBinStatCorrUnc//ZMassDilepton.hdf5"
-    
-    
+    # infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ZMassDilepton_ptll_yll_scetlib_dyturboCorr_FixedAlphaS_AlphaS_PerBinStatCorrUnc//ZMassDilepton.hdf5"
+    # infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ForAlphaS/WRemDev/ZMassDilepton_ptll_yll_scetlib_dyturbo_NewNPModel_LatticeValsOldVarsCorr_FixedAlphaS_AlphaS//ZMassDilepton.hdf5"
+    # infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ForAlphaS/WRemDev/ZMassDilepton_ptll_yll_scetlib_dyturboN3p0LL_LatticeNPCorr_FixedAlphaS_HackedPDFVarsFromHels_OwnPDFVars_AlphaS//ZMassDilepton.hdf5"
+    infilename = "/scratch/submit/cms/areimers/wmass/fitinputs/ForAlphaS/WRemDev/NewSteer/ZMassDilepton_ptll_yll_cosThetaStarll_quantile_phiStarll_quantile_scetlib_dyturboN3p0LL_LatticeNPCorr_NewNP_AllCT18Z_PDFFromCorr_ASFromCorr_WithLatticeConstraints//ZMassDilepton.hdf5"
+
+
     # outfolder = f"/work/submit/areimers/wmass/plots/fitinputs/ZMassDilepton_ptll_nominal"
     # outfolder = f"/work/submit/areimers/wmass/plots/fitinputs/ZMassDilepton_ptll__perBinStatCorrUnc"
     # outfolder = f"/work/submit/areimers/wmass/plots/fitinputs/ZMassDilepton_ptll_REPEAT"
@@ -63,7 +66,7 @@ def main():
     systgroups = f['hsystgroups'][...]
     systs = f['hsysts'][...]
     systsnoconstraint = f['hsystsnoconstraint'][...]
-    systsnoprofile = f['hsystsnoprofile'][...]
+    # systsnoprofile = f['hsystsnoprofile'][...]
     # meta = f['meta']
     meta = pickle_load_h5py(f["meta"])
     chan = meta["channel_info"]["ch0"]
@@ -84,16 +87,20 @@ def main():
     # print("sumw2", len(sumw2), type(sumw2), sumw2.shape, sumw2)
     # print("systgroupidxs", len(systgroupidxs), type(systgroupidxs), systgroupidxs.shape, systgroupidxs)
     # print("systgroups", len(systgroups), type(systgroups), systgroups.shape, systgroups)
-    # print("systs", len(systs), type(systs), systs.shape, systs)
+    print("systs", len(systs), type(systs), systs.shape, systs)
     # print("systsnoconstraint", len(systsnoconstraint), type(systsnoconstraint), systsnoconstraint.shape, systsnoconstraint)
     # print("systsnoprofile", len(systsnoprofile), type(systsnoprofile), systsnoprofile.shape, systsnoprofile)
     # # print("meta", len(meta), type(meta), meta)
     # # print(chan)
+    
     print(var)
-
+    print(len(systs))
     for s in systs:
         # if "theoryCorrStat" in str(s) or "per_bin_stat" in str(s):
-        if "scetlibNP" in str(s):
+        # if "scetlib" in str(s):
+        # if "resum" in str(s):
+        if "scale" in str(s).lower():
+        # if "pdf" in str(s):
             print(f"--> Found relevant {str(s)} in list of systs")
 
 

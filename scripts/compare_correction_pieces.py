@@ -77,6 +77,8 @@ def main():
 
 
         ("SCETlib/ct18z_newnps_n3+0ll_reproducesold/inclusive_Z_CT18Z_N3+0LL_olduncertainties_combined.pkl", "N$^{3+0}$LL (new NP reproducing old)"),
+        ("SCETlib/ct18z_newnps_n3+0ll_lattice_pdfvars/inclusive_Z_CT18Z_N3+0LL_lattice_allvars_higherprecision_pdfas_pdf_combined.pkl", "N$^{3+0}$LL (lattice for pdfas)"),
+        ("SCETlib/ct18z_nplambda_pdfvars/inclusive_Z_CT18Z_nplambda_pdfas_pdf_combined.pkl", "N$^{3+0}$LL (old NP for pdfas)"),
         
     ]
     
@@ -91,6 +93,7 @@ def main():
     ]
 
     hists_resum = [input_tools.read_scetlib_hist(os.path.join(genpath, fnr[0]))[{"vars" :  0}] for fnr in filenames_resum]
+    print(hists_resum[3])
     hists_fosing = [input_tools.read_scetlib_hist(os.path.join(genpath, fns[0]))[{"vars" :  0}] for fns in filenames_fosing]
     hists_fo = []
     for idx, (fnf, _) in enumerate(filenames_fo):
@@ -127,7 +130,7 @@ def main():
             yerr_ratio=True,
             ratio_legend=False,
             linewidth=1,
-            logy=True,
+            logy=False,
         )
         fig.savefig(f"{outfoldername}/correction_comparison_resum_{v}.pdf")
 
