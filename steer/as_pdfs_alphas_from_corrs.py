@@ -438,7 +438,7 @@ class AnalysisRunner:
             arg_variations = ""
             
             # alpha_s var
-            # arg_variations = " --varNames pdfAlphaS --varLabel '$\\alpha_\\mathrm{S}{\\pm}1\\sigma$' --lowerLegCols 2 --lowerLegPos 'upper right'"
+            arg_variations = " --varNames pdfAlphaS --varLabel '$\\alpha_\\mathrm{S}{\\pm}1\\sigma$' --lowerLegCols 2 --lowerLegPos 'upper right'"
 
             # # overlay lattice prediction (hardcoded external file)
             # arg_variations = " --addVarFromExternalFile /scratch/submit/cms/areimers/wmass/fitresults/ForAlphaS/WRemDev/NewSteer/ZMassDilepton_ptll_yll_cosThetaStarll_quantile_phiStarll_quantile_scetlib_dyturboN3p0LL_LatticeNPCorr_NewNP_AllCT18Z_PDFFromCorr_ASFromCorr_WithLatticeConstraints/fitresults_asimov.hdf5 red 'new NP model' --externalRatio num --lowerLegCols 2 --lowerLegPos 'upper right'"
@@ -450,7 +450,7 @@ class AnalysisRunner:
             # arg_variations = " --varNames resumTransitionZSymAvg resumTransitionZSymDiff resumFOScaleZSymAvg resumFOScaleZSymDiff --varLabel 'Match (avg.)' 'Match (diff.)' '$\\mu_{r/f}$ (avg.)' '$\\mu_{r/f}$ (diff.)' --lowerLegCols 3 --lowerLegPos 'upper left' --rrange 0.90 1.15" 
 
             # # resum transition
-            arg_variations = " --varNames QCDscaleZinclusive_PtV0_13000helicity_0_SymAvg QCDscaleZinclusive_PtV0_13000helicity_2_SymAvg --varLabel 'P0 (inc)' 'P2 (inc)' --lowerLegCols 3 --lowerLegPos 'upper left' --rrange 0.98 1.02" 
+            # arg_variations = " --varNames QCDscaleZinclusive_PtV0_13000helicity_0_SymAvg QCDscaleZinclusive_PtV0_13000helicity_2_SymAvg --varLabel 'P0 (inc)' 'P2 (inc)' --lowerLegCols 3 --lowerLegPos 'upper left' --rrange 0.98 1.02" 
 
 
             
@@ -486,7 +486,8 @@ class AnalysisRunner:
             # allpdfs_nicenames = " ".join([f"'PDF ({i})'" for i in range(1,30)])
             # arg_variations = f" --varNames {allpdfs_nuisnames} --varLabel {allpdfs_nicenames} --showVariations both --lowerLegCols 4 --lowerLegPos 'upper right'"
             if prefit:
-                arg_rrange = " --rrange 0.98 1.02"
+                # arg_rrange = " --rrange 0.98 1.02"
+                arg_rrange = " --rrange 0.90 1.10"
                 # arg_rrange = " --rrange 0.95 1.05"
                 # arg_rrange = " --rrange 0.97 1.03"
                 # arg_rrange = " --rrange 0.85 1.15"
@@ -497,9 +498,9 @@ class AnalysisRunner:
             # PDFs with largest change in global impact + pdfas variation
             # arg_variations = " --varNames pdf26CT18ZSymAvg pdf14CT18ZSymAvg pdfAlphaS --varLabel 'PDF (26)' 'PDF (14)' '$\\alpha_\\mathrm{S}$' --showVariations both --lowerLegCols 2 --lowerLegPos 'upper right'"
 
-        # arg_projections = " -m Project ch0 ptll"
+        arg_projections = " -m Project ch0 ptll"
         # arg_projections = " -m Project ch0 ptll -m Project ch0 yll"
-        arg_projections = " -m Project ch0 ptll -m Project ch0 yll -m Project ch0 cosThetaStarll_quantile -m Project ch0 phiStarll_quantile"
+        # arg_projections = " -m Project ch0 ptll -m Project ch0 yll -m Project ch0 cosThetaStarll_quantile -m Project ch0 phiStarll_quantile"
         #  --noData
         # --dataHist data_obs --chisq none
 
